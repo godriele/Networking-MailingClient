@@ -1,4 +1,5 @@
 # Networking-MailingClient
+Credits to NeuralNine
 
 A Python script that facilitates sending emails with attachments through Gmail's SMTP server. This script allows users to send plain text emails and attach files, making it ideal for simple automated email notifications or personal use cases.
 
