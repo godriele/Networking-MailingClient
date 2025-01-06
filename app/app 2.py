@@ -7,4 +7,3 @@ server = smtplib.SMTP('smtp.gmail.com', 25)
 server.ehlo()
 # Call this function to start the process
 
-server.login('goodydelacruz6@gmail.com', 'Godriele9')
