@@ -1,30 +1,34 @@
 import smtplib
-# This module defines an SMPT client session object that can be used to send email to
-# any internet machine with an SMTP or ESMTP listener daemon.
-
-server = smtplib.SMTP('smtp.gmail.com', 25)
-
-server.ehlo()
-# Call this function to start the process
-
-server.login('godriel9@gmial.com', 'Godriele10') # Test account
-
 from email import encoders
-# This module provides utility functions for encoding message payloads for secure transport
 from email.mime.text import MIMEText
-# This calls is used to create MIME (Multipurpose Internet Mail Extensions) objects for plain text email content
 from email.mime.base import MIMEBase
-# This is the base calss for creating MIME-compliant email messages with arbitraty content types
 from email.mime.multipart import MIMEMultipart
-# This class is used to create multipart email messages, which can contain multiple MIME parts
 
+server = smtplib.SMTP('smtp.gmail.com', 587)
+server.ehlo()
+server.starttls()  
+server.login('godriele9@gmail.com', 'Godriele10')  
 
 msg = MIMEMultipart()
 msg['From'] = 'Buko Papi'
 msg['To'] = 'goodydelacruz6@gmail.com'
-msg['subject'] = 'Just a test'
+msg['Subject'] = 'Just a test'
 
-with open('msg.txt', 'f') as f:
+with open('msg.txt', 'r') as f:
     message = f.read()
 
 msg.attach(MIMEText(message, 'plain'))
+
+filename = 'lebron.webp'
+with open(filename, 'rb') as attachment:
+    p = MIMEBase('application', 'octet-stream')
+    p.set_payload(attachment.read())
+
+encoders.encode_base64(p)
+p.add_header('Content-Disposition', f'attachment; filename={filename}')
+msg.attach(p)
+
+text = msg.as_string()
+server.sendmail('godriele9@gmail.com', 'goodydelacruz6@gmail.com', text)
+print("It worked")
+server.quit()  
